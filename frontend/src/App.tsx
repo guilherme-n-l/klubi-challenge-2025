@@ -5,6 +5,7 @@ import Banner from "@/components/blocks/Banner.tsx";
 import Info from "@/components/blocks/Info.tsx";
 import Catalogue from "@/components/blocks/Catalogue.tsx";
 import Footer from "@/components/blocks/Footer.tsx";
+import Chat from "@/components/ui/chat.tsx";
 
 function App() {
     const catalogueRef = useRef<HTMLDivElement>(null);
@@ -19,6 +20,7 @@ function App() {
     return (
         <>
             <Header/>
+            <Chat/>
             <Banner onScrollClick={scrollToCatalogue}/>
             <Info/>
             <div ref={catalogueRef}>
