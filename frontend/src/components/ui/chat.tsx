@@ -1,14 +1,12 @@
-"use client"
-
-import React, { useState, useEffect, FormEvent } from "react"
-import { Bot, CornerDownLeft } from "lucide-react"
-import { Button } from "@/components/ui/button"
+import React, {useState, useEffect, FormEvent} from "react"
+import {Bot, CornerDownLeft} from "lucide-react"
+import {Button} from "@/components/ui/button"
 import {
     ChatBubble,
     ChatBubbleAvatar,
     ChatBubbleMessage,
 } from "@/components/ui/chat-bubble"
-import { ChatInput } from "@/components/ui/chat-input"
+import {ChatInput} from "@/components/ui/chat-input"
 import {
     ExpandableChat,
     ExpandableChatHeader,
@@ -27,44 +25,74 @@ const Chat: React.FC = () => {
     ])
     const [input, setInput] = useState("")
     const [ws, setWs] = useState<WebSocket | null>(null)
-    const [loading, setLoading] = useState(false)
     const [error, setError] = useState<string | null>(null)
+    const [isLoading, setIsLoading] = useState(false)
+    const [isButtonDisabled, setIsButtonDisabled] = useState(false)
 
     const reconnectWebSocket = () => {
         setError(null)
-        setLoading(true)
         const socket = new WebSocket("ws://localhost:8000/ws")
         setWs(socket)
 
         socket.onopen = () => {
             console.log("WebSocket connected")
-            setLoading(false)
         }
 
         socket.onmessage = (event) => {
-            setLoading(false)
             const message = event.data
             console.log("Received from WebSocket:", message)
 
-            setMessages((prev) => [
-                ...prev,
-                {
-                    id: prev.length + 1,
-                    content: message,
-                    sender: "ai",
-                },
-            ])
+            setIsLoading(false)
+
+            if (message.includes("<END>")) {
+                const cleanMessage = message.replace("<END>", "")
+                setMessages((prev) => {
+                    const lastMessage = prev[prev.length - 1]
+                    return [
+                        ...prev.slice(0, prev.length - 1),
+                        {
+                            ...lastMessage,
+                            content: lastMessage.content + cleanMessage,
+                        },
+                    ]
+                })
+                setIsButtonDisabled(false)
+            } else {
+                setMessages((prev) => {
+                    const lastMessage = prev[prev.length - 1]
+
+                    if (lastMessage && lastMessage.sender === "ai") {
+                        return [
+                            ...prev.slice(0, prev.length - 1),
+                            {
+                                ...lastMessage,
+                                content: lastMessage.content + message,
+                            },
+                        ]
+                    } else {
+                        return [
+                            ...prev,
+                            {
+                                id: prev.length + 1,
+                                content: message,
+                                sender: "ai",
+                            },
+                        ]
+                    }
+                })
+            }
         }
 
         socket.onerror = (error) => {
             console.error("WebSocket error", error)
             setError("Failed to connect to the server. Try again later.")
-            setLoading(false)
+            setIsButtonDisabled(false)
         }
 
         socket.onclose = () => {
             console.log("WebSocket disconnected")
             setError("Connection lost. Please try again later.")
+            setIsButtonDisabled(false)
         }
     }
 
@@ -76,13 +104,6 @@ const Chat: React.FC = () => {
         e.preventDefault()
         if (!input.trim()) return
 
-        if (ws && ws.readyState === WebSocket.OPEN) {
-            setLoading(true)
-            ws.send(input)
-        } else {
-            setError("Failed to send message. Server is not connected.")
-        }
-
         setMessages((prev) => [
             ...prev,
             {
@@ -91,12 +112,28 @@ const Chat: React.FC = () => {
                 sender: "user",
             },
         ])
+
+        setIsLoading(true)
+        setIsButtonDisabled(true)
         setInput("")
+
+        if (ws && ws.readyState === WebSocket.OPEN) {
+            ws.send(input)
+        } else {
+            setError("Failed to send message. Server is not connected.")
+            setIsButtonDisabled(false)
+        }
+    }
+
+    const handleKeyDown = (e: React.KeyboardEvent) => {
+        if (e.key === "Enter" && !e.shiftKey) {
+            handleSubmit(e)
+        }
     }
 
     return (
         <div className="h-[0px] relative">
-            <ExpandableChat size="lg" position="bottom-right" icon={<Bot className="h-6 w-6" />}>
+            <ExpandableChat size="lg" position="bottom-right" icon={<Bot className="h-6 w-6"/>}>
                 <ExpandableChatHeader className="flex-col text-center justify-center">
                     <h1 className="!text-[3rem] font-semibold">Klubi AI 🤖</h1>
                     <p className="text-sm text-muted-foreground">
@@ -129,16 +166,14 @@ const Chat: React.FC = () => {
                         ))}
                     </div>
 
-                    {loading && (
+                    {isLoading && (
                         <ChatBubble variant="received">
                             <ChatBubbleAvatar
                                 className="h-8 w-8 shrink-0"
                                 src="src/assets/bot.png"
                                 fallback="AI"
                             />
-                            <ChatBubbleMessage isLoading>
-                                Carregando...
-                            </ChatBubbleMessage>
+                            <ChatBubbleMessage isLoading/>
                         </ChatBubble>
                     )}
 
@@ -167,11 +202,17 @@ const Chat: React.FC = () => {
                             onChange={(e) => setInput(e.target.value)}
                             placeholder="Type your message..."
                             className="min-h-12 resize-none rounded-lg bg-background border-0 p-3 shadow-none focus-visible:ring-0"
+                            onKeyDown={handleKeyDown}
                         />
                         <div className="flex items-center p-3 pt-0 justify-between">
-                            <Button type="submit" size="sm" className="ml-auto gap-1.5">
+                            <Button
+                                type="submit"
+                                size="sm"
+                                className="ml-auto gap-1.5"
+                                disabled={isButtonDisabled}
+                            >
                                 Enviar
-                                <CornerDownLeft className="size-3.5" />
+                                <CornerDownLeft className="size-3.5"/>
                             </Button>
                         </div>
                     </form>

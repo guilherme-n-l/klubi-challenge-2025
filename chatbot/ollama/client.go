@@ -61,8 +61,8 @@ func (c *Client) buildRequest(body []byte) (*http.Request, error) {
 	return req, nil
 }
 
-func (c *Client) Prompt(stream bool, msgs ...Message) (Response, error) {
-	req := Request{Model: c.Model, Messages: msgs, Stream: stream}
+func (c *Client) Prompt(msgs ...Message) (Response, error) {
+	req := Request{Model: c.Model, Messages: msgs, Stream: false}
 
 	reqBody, err := json.Marshal(&req)
 	if err != nil {
@@ -92,4 +92,53 @@ func (c *Client) Prompt(stream bool, msgs ...Message) (Response, error) {
 	}
 
 	return res, nil
+}
+
+func (c *Client) handleStreamChan(resBody io.Reader, resChan chan Response) {
+	decoder := json.NewDecoder(resBody)
+
+	for {
+		var res Response
+
+		if err := decoder.Decode(&res); err != nil {
+			if err == io.EOF {
+				break
+			}
+
+			resChan <- Response{Done: true}
+			break
+		}
+
+		resChan <- res
+	}
+
+	resChan <- Response{Done: true}
+}
+
+func (c *Client) StreamPrompt(msgs ...Message) (chan Response, error) {
+	req := Request{Model: c.Model, Messages: msgs, Stream: true}
+
+	reqBody, err := json.Marshal(&req)
+	if err != nil {
+		return nil, err
+	}
+
+	httpReq, err := c.buildRequest(reqBody)
+	if err != nil {
+		return nil, err
+	}
+
+	httpRes, err := httpClient.Do(httpReq)
+	if err != nil {
+		return nil, err
+	}
+
+	if httpRes.StatusCode != 200 {
+		body, _ := io.ReadAll(httpRes.Body)
+		return nil, fmt.Errorf("Status code: %d, Body: %s", httpRes.StatusCode, body)
+	}
+
+	resChan := make(chan Response)
+	go c.handleStreamChan(httpRes.Body, resChan)
+	return resChan, nil
 }
