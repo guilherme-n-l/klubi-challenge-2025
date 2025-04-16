@@ -75,7 +75,7 @@ const Catalogue: React.FC = () => {
                             {filteredCars.map((car, index) => (
                                 <Card
                                     key={index}
-                                    imageUrl={`src/assets/cars/${car.Image}`}
+                                    imageUrl={`/assets/cars/${car.Image}`}
                                     title={`${car.Name} ${car.Model}`}
                                     description={`Local: ${car.Location}`}
                                     price={car.Price}

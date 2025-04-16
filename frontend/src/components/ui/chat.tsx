@@ -1,5 +1,5 @@
 import React, {useState, useEffect, FormEvent} from "react"
-import {Bot, CornerDownLeft} from "lucide-react"
+import {Bot, CornerDownLeft, RefreshCw} from "lucide-react"
 import {Button} from "@/components/ui/button"
 import {
     ChatBubble,
@@ -85,14 +85,16 @@ const Chat: React.FC = () => {
 
         socket.onerror = (error) => {
             console.error("WebSocket error", error)
-            setError("Failed to connect to the server. Try again later.")
+            setError("Não foi possível conectar com o servidor.")
             setIsButtonDisabled(false)
+            setIsLoading(false)
         }
 
         socket.onclose = () => {
             console.log("WebSocket disconnected")
-            setError("Connection lost. Please try again later.")
+            setError("Não foi possível conectar com o servidor.")
             setIsButtonDisabled(false)
+            setIsLoading(false)
         }
     }
 
@@ -141,7 +143,7 @@ const Chat: React.FC = () => {
                     </p>
                 </ExpandableChatHeader>
 
-                <ExpandableChatBody>
+                <ExpandableChatBody className="p-3">
                     <div className="mt-2">
                         {messages.map((message) => (
                             <ChatBubble
@@ -152,13 +154,14 @@ const Chat: React.FC = () => {
                                     className="h-8 w-8 shrink-0"
                                     src={
                                         message.sender === "user"
-                                            ? "src/assets/user.png"
-                                            : "src/assets/bot.png"
+                                            ? "/assets/user.png"
+                                            : "/assets/bot.png"
                                     }
                                     fallback={message.sender === "user" ? "US" : "AI"}
                                 />
                                 <ChatBubbleMessage
                                     variant={message.sender === "user" ? "sent" : "received"}
+                                    className={`${(message.sender === "user" ? "mr-1 ml-3 text-right" : "ml-1 mr-3 text-left")} inline-flex max-w-3/4 px-3`}
                                 >
                                     {message.content}
                                 </ChatBubbleMessage>
@@ -170,7 +173,7 @@ const Chat: React.FC = () => {
                         <ChatBubble variant="received">
                             <ChatBubbleAvatar
                                 className="h-8 w-8 shrink-0"
-                                src="src/assets/bot.png"
+                                src="/assets/bot.png"
                                 fallback="AI"
                             />
                             <ChatBubbleMessage isLoading/>
@@ -178,16 +181,14 @@ const Chat: React.FC = () => {
                     )}
 
                     {error && (
-                        <div className="p-3 bg-red-500 text-white rounded-lg shadow-sm">
+                        <div className="m-5 flex p-3 bg-red-700 text-white rounded-lg shadow-sm gap-2 justify-center items-center">
                             <span>{error}</span>
                             <Button
                                 onClick={reconnectWebSocket}
-                                className="mt-2"
                                 size="sm"
                                 variant="outline"
                             >
-                                Tentar novamente
-                            </Button>
+                                <RefreshCw className="w-4 h-4" color="white"/></Button>
                         </div>
                     )}
                 </ExpandableChatBody>

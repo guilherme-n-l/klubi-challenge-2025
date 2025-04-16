@@ -3,17 +3,17 @@ import React from "react";
 const Info: React.FC = () => {
     const infoData = [
         {
-            img: "src/assets/awesome.png",
+            img: "/assets/awesome.png",
             title: "Encontre <u>O</u> carro",
             content: "Use IA para escolher o carro que mais combina com seu estilo e necessidades, de forma rápida e sem complicação."
         },
         {
-            img: "src/assets/okay.png",
+            img: "/assets/okay.png",
             title: "Compare e escolha",
             content: "Compare preços e características de veículos facilmente e faça a escolha certa para o seu bolso e preferências."
         },
         {
-            img: "src/assets/rocker.png",
+            img: "/assets/rocker.png",
             title: "Receba!",
             content: "Com o crédito na mão, é só escolher o veículo dos sonhos e dar um passo seguro rumo à sua conquista."
         }

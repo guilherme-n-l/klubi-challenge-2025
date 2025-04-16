@@ -11,7 +11,7 @@ const Banner: React.FC<BannerProps> = ({ onScrollClick }) => {
             <div className="absolute inset-0 z-0 translate-x-1/4 -translate-y-1/2 object-cover">
                 <video
                     className="w-full h-auto"
-                    src="/src/assets/car-video.mp4"
+                    src="/assets/car-video.mp4"
                     loop
                     muted
                     autoPlay

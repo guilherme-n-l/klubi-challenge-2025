@@ -28,7 +28,7 @@ const Header: React.FC = () => {
             }`}
         >
             <div className="flex justify-between items-center p-2">
-                <a href="https://klubi.com.br"><img src="src/assets/logo.png" alt="logo" className="h-10 w-auto" /></a>
+                <a href="https://klubi.com.br"><img src="/assets/logo.png" alt="logo" className="h-10 w-auto" /></a>
                 <Github></Github>
             </div>
         </header>
