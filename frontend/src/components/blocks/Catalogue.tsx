@@ -24,7 +24,7 @@ const Catalogue: React.FC = () => {
             .then((res) => res.json())
             .then((data: CarData[]) => {
                 setCars(data);
-                setFilteredCars(data); // Show all by default
+                setFilteredCars(data);
 
                 const uniqueBrands = Array.from(new Set(data.map(car => car.Name)));
                 const uniqueLocations = Array.from(new Set(data.map(car => car.Location)));
@@ -75,7 +75,7 @@ const Catalogue: React.FC = () => {
                             {filteredCars.map((car, index) => (
                                 <Card
                                     key={index}
-                                    imageUrl={`/assets/cars/${car.Image}`}
+                                    imageUrl={`${car.Image}`}
                                     title={`${car.Name} ${car.Model}`}
                                     description={`Local: ${car.Location}`}
                                     price={car.Price}

@@ -2,70 +2,70 @@
   {
     "Name": "BYD",
     "Model": "Dolphin",
-    "Image": "dolphin.jpg",
+    "Image": "/cars/dolphin.jpg",
     "Price": 99990,
     "Location": "São Paulo"
   },
   {
     "Name": "Toyota",
     "Model": "Corolla",
-    "Image": "corolla.jpg",
+    "Image": "/cars/corolla.jpg",
     "Price": 112000,
     "Location": "São Paulo"
   },
   {
     "Name": "Volkswagen",
     "Model": "T-Cross",
-    "Image": "tcross.png",
+    "Image": "/cars/tcross.png",
     "Price": 118500,
     "Location": "Campinas"
   },
   {
     "Name": "Honda",
     "Model": "Civic",
-    "Image": "civic.jpg",
+    "Image": "/cars/civic.jpg",
     "Price": 105000,
     "Location": "Rio de Janeiro"
   },
   {
     "Name": "Chevrolet",
     "Model": "Onix",
-    "Image": "onix.jpg",
+    "Image": "/cars/onix.jpg",
     "Price": 85000,
     "Location": "Belo Horizonte"
   },
   {
     "Name": "Hyundai",
     "Model": "HB20",
-    "Image": "hb20.jpg",
+    "Image": "/cars/hb20.jpg",
     "Price": 79000,
     "Location": "São Paulo"
   },
   {
     "Name": "Renault",
     "Model": "Kwid",
-    "Image": "kwid.jpg",
+    "Image": "/cars/kwid.jpg",
     "Price": 68990,
     "Location": "Curitiba"
   },
   {
     "Name": "Fiat",
     "Model": "Pulse",
-    "Image": "pulse.jpg",
+    "Image": "/cars/pulse.jpg",
     "Price": 96000,
     "Location": "São Paulo"
   },
   {
     "Name": "Jeep",
     "Model": "Renegade",
-    "Image": "renegade.jpg",
+    "Image": "/cars/renegade.jpg",
     "Price": 122000,
     "Location": "Porto Alegre"
   },
   {
     "Name": "Peugeot",
     "Model": "208",
-    "Image": "208.jpg",
+    "Image": "/cars/208.jpg",
     "Price": 87500,
     "Location": "São Paulo"
   }
