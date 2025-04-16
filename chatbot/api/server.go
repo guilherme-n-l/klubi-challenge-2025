@@ -6,6 +6,7 @@ import (
 	"os"
 	"strings"
 
+	"chatbot/data"
 	"chatbot/ollama"
 
 	"github.com/google/uuid"
@@ -45,7 +46,9 @@ func handleConnection(conn *websocket.Conn, SID string) {
 		// res, err := client.Prompt(ollama.Message{Role: "system", Content: fmt.Sprintf("Context: %s", strings.Join(context, "\n"))},
 		// 	ollama.Message{Role: "user", Content: string(p)})
 
-		resChan, err := client.StreamPrompt(ollama.Message{Role: "system", Content: fmt.Sprintf("Context: %s", strings.Join(context, "\n"))},
+		resChan, err := client.StreamPrompt(
+			ollama.Message{Role: "system", Content: fmt.Sprintf("Role: %s", data.Prompt)},
+			ollama.Message{Role: "system", Content: fmt.Sprintf("Context: %s", strings.Join(context, "\n"))},
 			ollama.Message{Role: "user", Content: string(p)})
 
 		if err != nil {
@@ -69,7 +72,6 @@ func handleConnection(conn *websocket.Conn, SID string) {
 			resStr := res.Message.Content
 			fmt.Print(resStr)
 			fullRes += resStr
-
 
 			if err = conn.WriteMessage(msgType, []byte(resStr)); err != nil {
 				fmt.Fprintln(os.Stderr, err)
