@@ -1,3 +1,6 @@
+// Package api provides the functionality to handle WebSocket connections for interacting with the Ollama AI model.
+// It processes incoming messages from clients, maintains a context window for conversation, and streams responses
+// from the AI model back to the client in real-time.
 package api
 
 import (
@@ -16,9 +19,11 @@ import (
 const CONTEXT_WINDOW = 2
 
 var upgrader = websocket.Upgrader{
-	CheckOrigin: func(r *http.Request) bool { return true },
+	CheckOrigin: func(r *http.Request) bool { return true }, // Change when in production
 }
 
+// updateContext updates the context with the new message, ensuring that the context window does not exceed CONTEXT_WINDOW.
+// It removes the oldest message if the context has reached the maximum size.
 func updateContext(context []string, msg string) []string {
 
 	if len(context) == CONTEXT_WINDOW {
@@ -28,6 +33,8 @@ func updateContext(context []string, msg string) []string {
 	}
 }
 
+// handleConnection handles a WebSocket connection, reading messages from the user, sending them to the Ollama API,
+// and streaming the responses back to the client.
 func handleConnection(conn *websocket.Conn, SID string) {
 	defer conn.Close()
 
@@ -87,6 +94,8 @@ func handleConnection(conn *websocket.Conn, SID string) {
 	}
 }
 
+// AcceptConnection upgrades the incoming HTTP request to a WebSocket connection and starts handling the connection
+// in a separate goroutine. The SID is generated using a new UUID to uniquely identify the session.
 func AcceptConnection(w http.ResponseWriter, r *http.Request) {
 	conn, err := upgrader.Upgrade(w, r, nil)
 	if err != nil {

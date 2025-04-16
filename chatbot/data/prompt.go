@@ -1,3 +1,5 @@
+// Package data provides functionality for loading and formatting vehicle data,
+// as well as generating a prompt for an AI agent that helps users find the best car based on their needs.
 package data
 
 import (
@@ -5,6 +7,8 @@ import (
 	"os"
 )
 
+// getJsonData reads the vehicle data from the "data/data.json" file and returns its contents as a string.
+// If there is an error reading the file, it prints the error to stderr and returns an empty string.
 func getJsonData() string {
 	data, err := os.ReadFile("data/data.json")
 
