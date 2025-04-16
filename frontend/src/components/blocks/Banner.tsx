@@ -1,11 +1,11 @@
 import React from "react";
-import { ParticleButton } from "@/components/ui/particle-button.tsx";
+import {ParticleButton} from "@/components/ui/particle-button.tsx";
 
 interface BannerProps {
-    onScrollClick: () => void;  // Define the prop type
+    onScrollClick: () => void;
 }
 
-const Banner: React.FC<BannerProps> = ({ onScrollClick }) => {
+const Banner: React.FC<BannerProps> = ({onScrollClick}) => {
     return (
         <div className="relative w-screen h-[60vh] overflow-hidden left-1/2 right-1/2 -ml-[50vw] -mr-[50vw]">
             <div className="absolute inset-0 z-0 translate-x-1/4 -translate-y-1/2 object-cover">

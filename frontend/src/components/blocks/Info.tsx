@@ -25,7 +25,8 @@ const Info: React.FC = () => {
                 {infoData.map((item, index) => (
                     <div key={index} className="text-stone-800 flex flex-col items-start self-center mt-20">
                         <img src={item.img} className="w-[8vw] mb-3 self-center" alt={item.title}/>
-                        <h2 dangerouslySetInnerHTML={{ __html: item.title }} className="pl-0 text-[1.5rem] self-center font-extrabold"></h2>
+                        <h2 dangerouslySetInnerHTML={{__html: item.title}}
+                            className="pl-0 text-[1.5rem] self-center font-extrabold"></h2>
                         <p className="mt-1.5 max-w-[36ch] break-words leading-relaxed">
                             {item.content}
                         </p>

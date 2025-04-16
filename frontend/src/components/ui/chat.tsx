@@ -31,7 +31,7 @@ const Chat: React.FC = () => {
 
     const reconnectWebSocket = () => {
         setError(null)
-        const socket = new WebSocket("ws://localhost:8000/ws")
+        const socket = new WebSocket(import.meta.env.VITE_WS_URL)
         setWs(socket)
 
         socket.onopen = () => {
@@ -124,6 +124,7 @@ const Chat: React.FC = () => {
         } else {
             setError("Failed to send message. Server is not connected.")
             setIsButtonDisabled(false)
+            setIsLoading(false)
         }
     }
 
@@ -181,7 +182,8 @@ const Chat: React.FC = () => {
                     )}
 
                     {error && (
-                        <div className="m-5 flex p-3 bg-red-700 text-white rounded-lg shadow-sm gap-2 justify-center items-center">
+                        <div
+                            className="m-5 flex p-3 bg-red-700 text-white rounded-lg shadow-sm gap-2 justify-center items-center">
                             <span>{error}</span>
                             <Button
                                 onClick={reconnectWebSocket}
