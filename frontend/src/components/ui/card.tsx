@@ -1,5 +1,5 @@
 import React from "react";
-import { BackgroundGradient } from "@/components/ui/background-gradient.tsx";
+import {BackgroundGradient} from "@/components/ui/background-gradient.tsx";
 
 interface CardProps {
     imageUrl: string;
@@ -8,7 +8,7 @@ interface CardProps {
     price: number;
 }
 
-const Card: React.FC<CardProps> = ({ imageUrl, title, description, price }) => (
+const Card: React.FC<CardProps> = ({imageUrl, title, description, price}) => (
     <div className="flex justify-center">
         <BackgroundGradient className="rounded-[22px] w-[250px] h-[400px] bg-white">
             <div className="flex flex-col h-full">

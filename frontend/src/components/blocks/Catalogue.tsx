@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from "react";
-import Card from "@/components/ui/card.tsx";
+import React, {useEffect, useState} from "react";
 import Filter from "@/components/ui/filter.tsx";
+import Card from "@/components/ui/card.tsx";
 
 interface CarData {
     Name: string;
@@ -43,7 +43,7 @@ const Catalogue: React.FC = () => {
         location: string;
         price: number;
     }) => {
-        const { brand, location, price } = filters;
+        const {brand, location, price} = filters;
         let result = cars;
 
         if (brand) result = result.filter(car => car.Name === brand);
@@ -55,8 +55,10 @@ const Catalogue: React.FC = () => {
 
     return (
         <>
-            <div className="relative w-screen min-h-[7vh] overflow-hidden left-1/2 right-1/2 -ml-[50vw] -mr-[50vw] bg-[#242424] [border-top-left-radius:50%] [border-top-right-radius:50%]"/>
-            <div className="relative w-screen h-full overflow-hidden left-1/2 right-1/2 -ml-[50vw] -mr-[50vw] bg-[#242424]">
+            <div
+                className="relative w-screen min-h-[7vh] overflow-hidden left-1/2 right-1/2 -ml-[50vw] -mr-[50vw] bg-[#242424] [border-top-left-radius:50%] [border-top-right-radius:50%]"/>
+            <div
+                className="relative w-screen h-full overflow-hidden left-1/2 right-1/2 -ml-[50vw] -mr-[50vw] bg-[#242424]">
                 <h1 className="font-bold text-stone-50 m-10 !text-[3rem]">
                     Conheça os nossos produtos!
                 </h1>

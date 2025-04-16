@@ -1,10 +1,10 @@
 import * as React from "react";
-import { useState, useRef } from "react";
-import { Button } from "@/components/ui/button";
-import { motion, AnimatePresence } from "framer-motion";
-import { cn } from "@/lib/utils";
-import type { ButtonProps } from "@/components/ui/button";
-import { MousePointerClick } from "lucide-react";
+import {useState, useRef} from "react";
+import {Button} from "@/components/ui/button";
+import {motion, AnimatePresence} from "framer-motion";
+import {cn} from "@/lib/utils";
+import type {ButtonProps} from "@/components/ui/button";
+import {MousePointerClick} from "lucide-react";
 
 interface ParticleButtonProps extends ButtonProps {
     onSuccess?: () => void;
@@ -28,7 +28,7 @@ function SuccessParticles({
                 <motion.div
                     key={i}
                     className="fixed w-1 h-1 bg-amber-200 dark:bg-white rounded-full"
-                    style={{ left: centerX, top: centerY }}
+                    style={{left: centerX, top: centerY}}
                     initial={{
                         scale: 0,
                         x: 0,
@@ -75,7 +75,7 @@ function ParticleButton({
 
     return (
         <>
-            {showParticles && <SuccessParticles buttonRef={buttonRef} />}
+            {showParticles && <SuccessParticles buttonRef={buttonRef}/>}
             <Button
                 ref={buttonRef}
                 onClick={handleClick}
@@ -88,10 +88,10 @@ function ParticleButton({
                 {...props}
             >
                 {children}
-                <MousePointerClick className="h-4 w-4" />
+                <MousePointerClick className="h-4 w-4"/>
             </Button>
         </>
     );
 }
 
-export { ParticleButton };
+export {ParticleButton};

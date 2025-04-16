@@ -1,4 +1,4 @@
-import { useRef } from "react";
+import {useRef} from "react";
 import './App.css';
 import Header from "@/components/blocks/Header.tsx";
 import Banner from "@/components/blocks/Banner.tsx";
@@ -13,7 +13,7 @@ function App() {
     const scrollToCatalogue = () => {
         console.log("Button clicked to scroll to Catalogue");
         if (catalogueRef.current) {
-            catalogueRef.current.scrollIntoView({ behavior: "smooth" });
+            catalogueRef.current.scrollIntoView({behavior: "smooth"});
         }
     };
 

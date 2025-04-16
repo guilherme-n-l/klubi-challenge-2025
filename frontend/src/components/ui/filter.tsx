@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, {useState, useEffect} from "react";
 
 interface FilterProps {
     brands: string[];
@@ -12,7 +12,7 @@ interface FilterProps {
     }) => void;
 }
 
-const Filter: React.FC<FilterProps> = ({ brands, locations, minPrice, maxPrice, onFilterChange }) => {
+const Filter: React.FC<FilterProps> = ({brands, locations, minPrice, maxPrice, onFilterChange}) => {
     const [selectedBrand, setSelectedBrand] = useState('');
     const [selectedLocation, setSelectedLocation] = useState('');
     const [selectedPrice, setSelectedPrice] = useState(maxPrice);

@@ -1,5 +1,4 @@
-import React, { useState, useEffect } from "react";
-// @ts-ignore
+import React, {useState, useEffect} from "react";
 import Github from "@/components/ui/star.tsx";
 
 const Header: React.FC = () => {
@@ -28,7 +27,7 @@ const Header: React.FC = () => {
             }`}
         >
             <div className="flex justify-between items-center p-2">
-                <a href="https://klubi.com.br"><img src="/assets/logo.png" alt="logo" className="h-10 w-auto" /></a>
+                <a href="https://klubi.com.br"><img src="/assets/logo.png" alt="logo" className="h-10 w-auto"/></a>
                 <Github></Github>
             </div>
         </header>

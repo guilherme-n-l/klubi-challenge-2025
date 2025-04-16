@@ -31,7 +31,7 @@ func updateContext(context []string, msg string) []string {
 func handleConnection(conn *websocket.Conn, SID string) {
 	defer conn.Close()
 
-	client := ollama.NewClient("http://localhost:11434", "gemma3:4b")
+	client := ollama.NewClient(os.Getenv("OLLAMA_URL"), os.Getenv("OLLAMA_MODEL"))
 	context := []string{}
 
 	for {
