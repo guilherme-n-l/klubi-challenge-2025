@@ -15,8 +15,6 @@ Este repositório contém o projeto de um buscador de carros para compra, como p
 
   As respostas dos modelos LLM são enviadas em streaming, garantindo uma experiência mais rápida e contínua durante a conversa, sem travamentos ou carregamentos demorados.
 
-Claro! Aqui está a seção **Rodando a Aplicação**, com as instruções de execução e uma subseção clara sobre as dependências:
-
 ## Rodando a Aplicação
 
 Este projeto é composto por duas partes: **frontend** (React) e **backend** (Go). A comunicação entre o frontend e o backend é feita via WebSocket, e o backend também é responsável por interagir com modelos LLM via Ollama.
